@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.scene-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: black;
+}
+
+.library-image {
+  width: 1024px;
+  height: 768px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Clickable Frame Area */
+.frame-click-area {
+  position: absolute;
+  top: 25%;
+  left: 45%;
+  width: 10%;
+  height: 22%;
+  background: rgba(255, 255, 255, 0.2); /* Translucent */
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Clickable Light Switch Area */
+.light-click-area {
+  position: absolute;
+  top: 49%;
+  left: 80%;
+  width: 3%;
+  height: 7%;
+  background: rgba(255, 255, 255, 0.2); /* Translucent */
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Clickable Cabinet Area */
+.cabinet-click-area {
+  position: absolute;
+  top: 60%; /* Adjust to align with the cabinet */
+  left: 68%; /* Adjust position */
+  width: 5%; /* Adjust based on cabinet size */
+  height: 20%;
+  background: rgba(255, 255, 255, 0.2); /* Translucent */
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Lock Container */
+.lock-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 280px;
+  background: gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Lock Body */
+.lock-body {
+  width: 100px;
+  height: 120px;
+  background: black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid white;
+  margin-bottom: 10px;
+}
+
+.lock-text {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Number Pad */
+.number-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.num-btn, .delete-btn, .unlock-btn {
+  width: 45px;
+  height: 45px;
+  background: #333;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.num-btn:hover, .delete-btn:hover {
+  background: #555;
+}
+
+.unlock-btn {
+  background: green;
+}
+
+.unlock-btn:hover {
+  background: limegreen;
+}
+
+/* Error Message */
+.error-text {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Close Button */
+.close-lock-btn {
+  background: gray;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.close-lock-btn:hover {
+  background: darkgray;
+}
+/* Inventory Sidebar */
+.inventory {
+  position: absolute;
+  top: 10%;
+  left: 10px;
+  width: 150px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.inventory h3 {
+  font-size: 16px;
+  text-align: center;
+}
+
+.inventory ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.inventory li {
+  font-size: 14px;
+  padding: 5px 0;
+}
+p{
+  color: aliceblue;
+}

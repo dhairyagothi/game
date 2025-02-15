@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(700px); /* Blurs the entire container */
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('./../assets/homebg.png'); /* Cyberpunk background */
+  background-size: cover;
+  background-position: center;
+  color: #0ff; /* Neon cyan */
+  text-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+}
+
+/* New blur overlay layer */
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dark translucent layer */
+  backdrop-filter: blur(35px); /* Increased blur effect by 75% */
+  z-index: -1;
+}
+
+.college-name {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: #e0e0e0; /* Slightly darker for better readability */
+  text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #ff00ff;
+}
+
+.club-name {
+  font-size: 2.5rem; /* Increased font size */
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: #ff00ff; /* Brighter purple for more visibility */
+  text-shadow: 0 0 15px #ff00ff, 0 0 30px #0ff; /* Increased text shadow */
+}
+
+.club-logo {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 15px #ff00ff); /* Neon glow */
+}
+
+.game-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+  background: linear-gradient(45deg, #ff00ff, #0ff);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow: 0 0 5px #fff;
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #0ff;
+  transition: 0.3s ease-in-out;
+}
+
+.game-button:hover {
+  background: linear-gradient(45deg, #0ff, #ff00ff);
+  box-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
+}
