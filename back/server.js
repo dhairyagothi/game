@@ -78,7 +78,7 @@ app.post("/restart-timer", (req, res) => {
     res.json({ message: "Game started!", timeLeft: 300, points });
   } else {
     // If a game is already in progress, reset only the timer.
-    timerEndTime = Date.now() + 2 * 60 * 1000; // Reset timer to 5 minutes
+    timerEndTime = Date.now() + 5 * 60 * 1000; // Reset timer to 5 minutes
     res.json({ message: "Timer restarted!", timeLeft: 300, points });
   }
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import axios from "axios";
 
 const Leaderboard = ({ players = [], currentPlayer = { score: 0, itemsFound: 0 } }) => {
   const navigate = useNavigate();
@@ -18,9 +18,15 @@ const Leaderboard = ({ players = [], currentPlayer = { score: 0, itemsFound: 0 }
     nextRoute = "/games/game3";
   }
   
-  const handleNextLevel = () => {
-    // When navigating to the next level, pass along the current game's identifier as state if needed.
-    navigate(nextRoute, { state: { previousGame: nextRoute.split("/").pop() } });
+  const handleNextLevel = async () => {
+    try {
+      // Call the backend endpoint to reset only the timer (without changing points)
+      await axios.post("http://localhost:5000/restart-timer");
+      // Now navigate to the next level, passing along the identifier if needed.
+      navigate(nextRoute, { state: { previousGame: nextRoute.split("/").pop() } });
+    } catch (error) {
+      console.error("Error restarting timer", error);
+    }
   };
 
   return (
