@@ -182,6 +182,24 @@ const MysteryGame = () => {
       >
         ←
       </div>
+      <div
+        onClick={() => navigate("/games/game12")}
+        style={{
+          position: "absolute",
+          right: "10px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          cursor: "pointer",
+          fontSize: "2rem",
+          color: "#fff",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          padding: "10px",
+          borderRadius: "50%",
+          zIndex: 2
+        }}
+      >
+        →
+      </div>
     </div>
 
   );
