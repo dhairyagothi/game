@@ -15,7 +15,7 @@ const LibraryScene = () => {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [inventory, setInventory] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [points, setPoints] = useState(0);
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ const LibraryScene = () => {
       .post("http://localhost:5000/start-game")
       .then((res) => {
         setTimeLeft(res.data.timeLeft);
+        console.log(res.data.timeLeft)
         setPoints(res.data.points);
       })
       .catch((err) => console.error("Error starting game:", err));
@@ -45,6 +46,14 @@ const LibraryScene = () => {
 
   // Redirect to leaderboard if timer runs out.
   useEffect(() => {
+    axios
+        .get("http://localhost:5000/game-status")
+        .then((res) => {
+          setTimeLeft(res.data.timeLeft);
+          setPoints(res.data.points);
+        })
+        .catch((err) => console.error("Error fetching game status:", err));
+    console.log(timeLeft)
     if (timeLeft === 0) {
       navigate("/leaderboard", { state: { previousGame: "game1", currentScore: points } });
     }
@@ -183,6 +192,21 @@ const LibraryScene = () => {
           </button>
         </div>
       )}
+      <div
+        onClick={() => navigate("/games/game11")}
+        style={{
+          position: "absolute",
+          right: "10px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          cursor: "pointer",
+          fontSize: "2rem",
+          color: "#fff",
+          zIndex: 2,
+        }}
+      >
+        →
+      </div>
     </div>
   );
 };

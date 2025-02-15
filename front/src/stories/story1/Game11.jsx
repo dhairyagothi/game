@@ -6,7 +6,7 @@ const MysteryGame = () => {
   const [showLock, setShowLock] = useState(false);
   const [enteredCode, setEnteredCode] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [points, setPoints] = useState(0);
   const [inventory, setInventory] = useState([]);
    const navigate = useNavigate();
