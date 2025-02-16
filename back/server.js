@@ -82,6 +82,11 @@ app.post("/restart-timer", (req, res) => {
     res.json({ message: "Timer restarted!", timeLeft: 300, points });
   }
 });
+// Reset Inventory Without Resetting Points
+app.post("/reset-inventory", (req, res) => {
+  foundItems = [];
+  res.json({ message: "Inventory reset", points });
+});
 
 // Start Server
 const PORT = 5000;

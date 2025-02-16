@@ -54,7 +54,7 @@ const Story4 = () => {
         const response = await axios.get("http://localhost:5000/game-status");
         setTimeLeft(response.data.timeLeft);
         setPoints(response.data.points);
-        if (response.data.timeLeft <= 0) {
+        if (response.data.timeLeft <= 0|| response.data.points==280) {
           navigate('/Leaderboard');
         }
       } catch (error) {

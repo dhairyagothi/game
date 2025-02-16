@@ -50,7 +50,7 @@ const MysteryGame = () => {
       .catch((err) => console.error("Error fetching inventory:", err));
   }, []);
   useEffect(() => {
-      if (timeLeft === 0) {
+      if (timeLeft === 0 || points==70) {
         navigate("/leaderboard", { state: { previousGame: "game1", currentScore: points } });
       }
     }, [timeLeft, points, navigate]);

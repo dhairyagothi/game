@@ -52,8 +52,8 @@ const Game3 = () => {
         const response = await axios.get("http://localhost:5000/game-status");
         setTimeLeft(response.data.timeLeft);
         setPoints(response.data.points);
-        if (response.data.timeLeft <= 0) {
-          navigate('/Leaderboard');
+        if (response.data.timeLeft <= 0 || response.data.points==210) {
+          navigate("/leaderboard", { state: { previousGame: "game3", currentScore: points } });
         }
       } catch (error) {
         console.error("Error fetching game status", error);

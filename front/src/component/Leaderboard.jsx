@@ -7,7 +7,6 @@ const Leaderboard = ({ players = [] }) => {
   const location = useLocation();
   
   // Retrieve the previous game indicator from the router state.
-  // For example, when navigating to Leaderboard, you might send: { previousGame: "game1" }.
   const previousGame = location.state?.previousGame || "default";
   
   // Determine next route based on where we came from.
@@ -16,7 +15,9 @@ const Leaderboard = ({ players = [] }) => {
     nextRoute = "/games/game2";
   } else if (previousGame === "game2") {
     nextRoute = "/games/game3";
-  }
+  }else if (previousGame === "game3") {
+  nextRoute = "/games/game4";
+}
   
   // State to store current player's score and number of items found.
   const [currentScore, setCurrentScore] = useState(0);
@@ -39,12 +40,14 @@ const Leaderboard = ({ players = [] }) => {
 
   const handleNextLevel = async () => {
     try {
-      // Call the backend endpoint to reset only the timer (without changing points)
+      // Call the endpoint to reset the timer (without changing points)
       await axios.post("http://localhost:5000/restart-timer");
-      // Now navigate to the next level, passing along the identifier if needed.
+      // Now reset the inventory without affecting points.
+      await axios.post("http://localhost:5000/reset-inventory");
+      // Navigate to the next level.
       navigate(nextRoute, { state: { previousGame: nextRoute.split("/").pop() } });
     } catch (error) {
-      console.error("Error restarting timer", error);
+      console.error("Error restarting timer/inventory", error);
     }
   };
 
