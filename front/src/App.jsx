@@ -8,7 +8,7 @@ import MysteryGame from './stories/story1/Game11';
 import Room3 from './stories/story1/Game12';
 import Game2 from './stories/story2/Game2';
 import Game3 from './stories/story3/Game3';
-import Game4 from './stories/story4/Game4';
+import Story4 from './stories/story4/Game4';
 import Leaderboard from './component/Leaderboard';
 import Story1intro from './stories/story1/Story1intro';
 import Story2intro from './stories/story2/Story2intro';
@@ -33,7 +33,7 @@ const App = () => {
           <Route path="/story3intro" element={<Story3intro />} />
           <Route path="/games/Game3" element={<Game3 />} />
           <Route path="/story4intro" element={<Story4intro />} />
-          <Route path="/games/Game4" element={<Game4 />} />
+          <Route path="/games/Game4" element={<Story4 />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </BrowserRouter>
