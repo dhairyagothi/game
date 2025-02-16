@@ -25,7 +25,7 @@ const LibraryScene = () => {
       .post("http://localhost:5000/start-game")
       .then((res) => {
         setTimeLeft(res.data.timeLeft);
-        console.log(res.data.timeLeft)
+        console.log("Time left:", res.data.timeLeft);
         setPoints(res.data.points);
       })
       .catch((err) => console.error("Error starting game:", err));
@@ -47,13 +47,12 @@ const LibraryScene = () => {
   // Redirect to leaderboard if timer runs out.
   useEffect(() => {
     axios
-        .get("http://localhost:5000/game-status")
-        .then((res) => {
-          setTimeLeft(res.data.timeLeft);
-          setPoints(res.data.points);
-        })
-        .catch((err) => console.error("Error fetching game status:", err));
-    console.log(timeLeft)
+      .get("http://localhost:5000/game-status")
+      .then((res) => {
+        setTimeLeft(res.data.timeLeft);
+        setPoints(res.data.points);
+      })
+      .catch((err) => console.error("Error fetching game status:", err));
     if (timeLeft === 0) {
       navigate("/leaderboard", { state: { previousGame: "game1", currentScore: points } });
     }
@@ -102,6 +101,25 @@ const LibraryScene = () => {
     }
   };
 
+  // When the frame area is clicked, add a Portrait (and 10 points) to the inventory.
+  const handleFrameClick = async () => {
+    try {
+      const payload = {
+        name: "Portrait",
+        description: "A portrait of the mansion's former resident.",
+        foundBy: "Player"
+      };
+      const res = await axios.post("http://localhost:5000/items", payload);
+      // Update inventory and points from the backend response.
+      setInventory([...inventory, res.data.item]);
+      setPoints(res.data.points);
+      alert("Portrait added! (+10 Points)");
+      setFrameRemoved(true);
+    } catch (error) {
+      console.error("Error posting portrait:", error);
+    }
+  };
+
   // Helper function to format seconds as mm:ss.
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -144,10 +162,11 @@ const LibraryScene = () => {
         transition={{ duration: 0.5 }}
       />
 
+      {/* When frame-click area is clicked, add a Portrait and 10 points */}
       {!frameRemoved && (
         <div
           className="frame-click-area"
-          onClick={() => setFrameRemoved(true)}
+          onClick={handleFrameClick}
         ></div>
       )}
       <div
@@ -192,6 +211,7 @@ const LibraryScene = () => {
           </button>
         </div>
       )}
+
       <div
         onClick={() => navigate("/games/game11")}
         style={{

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const Leaderboard = ({ players = [], currentPlayer = { score: 0, itemsFound: 0 } }) => {
+const Leaderboard = ({ players = [] }) => {
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -18,6 +18,25 @@ const Leaderboard = ({ players = [], currentPlayer = { score: 0, itemsFound: 0 }
     nextRoute = "/games/game3";
   }
   
+  // State to store current player's score and number of items found.
+  const [currentScore, setCurrentScore] = useState(0);
+  const [currentItemsFound, setCurrentItemsFound] = useState(0);
+
+  // Fetch current score and items from the backend.
+  useEffect(() => {
+    const fetchCurrentStatus = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/game-status");
+        setCurrentScore(response.data.points);
+        setCurrentItemsFound(response.data.hintsFound);
+      } catch (error) {
+        console.error("Error fetching current status:", error);
+      }
+    };
+
+    fetchCurrentStatus();
+  }, []);
+
   const handleNextLevel = async () => {
     try {
       // Call the backend endpoint to reset only the timer (without changing points)
@@ -66,8 +85,8 @@ const Leaderboard = ({ players = [], currentPlayer = { score: 0, itemsFound: 0 }
         </table>
         {/* Summary Section */}
         <div className="mt-6 p-4 bg-gray-800 rounded">
-          <p className="text-xl mb-2">Your Score: {currentPlayer.score}</p>
-          <p className="text-xl mb-4">Items Found: {currentPlayer.itemsFound}</p>
+          <p className="text-xl mb-2">Your Score: {currentScore}</p>
+          <p className="text-xl mb-4">Items Found: {currentItemsFound}</p>
           <button
             className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
             onClick={handleNextLevel}

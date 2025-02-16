@@ -9,7 +9,17 @@ const PuzzleSceneWithArrows = () => {
   const [points, setPoints] = useState(0);
   const navigate = useNavigate();
 
-  // Poll the backend every second to update timer and points
+  // Helper: fetch inventory from backend
+  const fetchInventory = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/items");
+      setInventory(response.data.items);
+    } catch (error) {
+      console.error("Error fetching inventory:", error);
+    }
+  };
+
+  // Poll the backend every second to update timer and points.
   useEffect(() => {
     const fetchGameStatus = async () => {
       try {
@@ -26,28 +36,28 @@ const PuzzleSceneWithArrows = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Check if timer has reached 0 and then navigate to leaderboard
+  // Check if timer has reached 0 and then navigate to leaderboard.
   useEffect(() => {
-    // Only navigate if timeLeft has been set (i.e. not null)
     if (timeLeft !== null && timeLeft === 0) {
       navigate("/leaderboard", { state: { previousGame: "game1", currentScore: points } });
     }
   }, [timeLeft, points, navigate]);
 
-  // Optionally, fetch current inventory if needed
+  // Fetch inventory on mount.
   useEffect(() => {
-    const fetchInventory = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/items");
-        setInventory(response.data.items);
-      } catch (error) {
-        console.error("Error fetching inventory:", error);
-      }
-    };
     fetchInventory();
   }, []);
 
+  // When the Polished Key div is clicked:
+  // Check if "Small Rusted Key" is in inventory.
+  // If absent, alert "Peculiar marking is present."
+  // If present, post "Polished Key" and refresh inventory.
   const handlePolishedKey = async () => {
+    const hasSmallRustedKey = inventory.some(item => item.name === "Small Rusted Key");
+    if (!hasSmallRustedKey) {
+      alert("Peculiar marking is present.");
+      return;
+    }
     try {
       const payload = {
         name: "Polished Key",
@@ -56,12 +66,22 @@ const PuzzleSceneWithArrows = () => {
       };
       await axios.post("http://localhost:5000/items", payload);
       alert("You found the Polished Key!");
+      await fetchInventory();
     } catch (error) {
       console.error("Error posting Polished Key:", error);
     }
   };
 
+  // When the Letter div is clicked:
+  // Check if "Polished Key" is in inventory.
+  // If absent, alert "Another key will be required."
+  // If present, post "Letter" and refresh inventory.
   const handleLetter = async () => {
+    const hasPolishedKey = inventory.some(item => item.name === "Polished Key");
+    if (!hasPolishedKey) {
+      alert("Another key will be required.");
+      return;
+    }
     try {
       const payload = {
         name: "Letter",
@@ -70,6 +90,7 @@ const PuzzleSceneWithArrows = () => {
       };
       await axios.post("http://localhost:5000/items", payload);
       alert("You found a Letter!");
+      await fetchInventory();
     } catch (error) {
       console.error("Error posting Letter:", error);
     }
@@ -128,6 +149,31 @@ const PuzzleSceneWithArrows = () => {
         Puzzle Scene
       </h1>
 
+      {/* Visible Inventory List */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "10px",
+          left: "10px",
+          background: "rgba(0, 0, 0, 0.5)",
+          padding: "10px",
+          borderRadius: "5px",
+          color: "#fff",
+          zIndex: 2
+        }}
+      >
+        <h3>Inventory</h3>
+        <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
+          {inventory.length > 0 ? (
+            inventory.map((item, index) => (
+              <li key={item.id || index}>{item.name}</li>
+            ))
+          ) : (
+            <li>No items found</li>
+          )}
+        </ul>
+      </div>
+
       {/* Clickable Div for Polished Key */}
       <div
         onClick={handlePolishedKey}
@@ -168,7 +214,7 @@ const PuzzleSceneWithArrows = () => {
 
       {/* Left Arrow Navigation to Game1 */}
       <div
-        onClick={navigateToGame11}
+        onClick={navigateToGame1}
         style={{
           position: "absolute",
           left: "10px",
@@ -188,7 +234,7 @@ const PuzzleSceneWithArrows = () => {
 
       {/* Right Arrow Navigation to Game11 */}
       <div
-        onClick={navigateToGame1}
+        onClick={navigateToGame11}
         style={{
           position: "absolute",
           right: "10px",
