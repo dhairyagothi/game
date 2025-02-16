@@ -38,7 +38,7 @@ const PuzzleSceneWithArrows = () => {
 
   // Check if timer has reached 0 and then navigate to leaderboard.
   useEffect(() => {
-    if ((timeLeft !== null && timeLeft === 0)|| points==140) {
+    if ((timeLeft !== null && timeLeft === 0)|| points==70) {
       navigate("/leaderboard", { state: { previousGame: "game1", currentScore: points } });
     }
   }, [timeLeft, points, navigate]);

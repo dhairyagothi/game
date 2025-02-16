@@ -6,17 +6,18 @@ import './story4.css';
 const Story4 = () => {
     const navigate = useNavigate();
 
-    const startGame = async () => {
+    const handleNextLevel = async () => {
         try {
-            // Call the backend to start/reset the game.
-            const response = await axios.post("http://localhost:5000/start-game");
-            console.log(response.data); // Optional: view returned timeLeft and points
-            // Navigate to the Game4 route after successful start.
-            navigate("/games/Game4");
+          // Call the endpoint to reset the timer (without changing points)
+          await axios.post("http://localhost:5000/restart-timer");
+          // Now reset the inventory without affecting points.
+          await axios.post("http://localhost:5000/reset-inventory");
+          // Navigate to the next level.
+          navigate("/games/game4")
         } catch (error) {
-            console.error("Error starting game", error);
+          console.error("Error restarting timer/inventory", error);
         }
-    };
+      };
 
     return (
         <div className="story1-container">
@@ -52,7 +53,7 @@ const Story4 = () => {
                     (Continue scrolling for the full story...)
                 </p>
             </div>
-            <button className="start-button" onClick={startGame}>
+            <button className="start-button" onClick={handleNextLevel}>
                 Start the Game
             </button>
         </div>

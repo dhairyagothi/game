@@ -12,11 +12,11 @@ const Leaderboard = ({ players = [] }) => {
   // Determine next route based on where we came from.
   let nextRoute = "/games/game1"; // default (if needed)
   if (previousGame === "game11" || previousGame === "game1") {
-    nextRoute = "/games/game2";
+    nextRoute = "/story2intro";
   } else if (previousGame === "game2") {
-    nextRoute = "/games/game3";
+    nextRoute = "/story3intro";
   }else if (previousGame === "game3") {
-  nextRoute = "/games/game4";
+  nextRoute = "/story4intro";
 }
   
   // State to store current player's score and number of items found.
@@ -38,18 +38,7 @@ const Leaderboard = ({ players = [] }) => {
     fetchCurrentStatus();
   }, []);
 
-  const handleNextLevel = async () => {
-    try {
-      // Call the endpoint to reset the timer (without changing points)
-      await axios.post("http://localhost:5000/restart-timer");
-      // Now reset the inventory without affecting points.
-      await axios.post("http://localhost:5000/reset-inventory");
-      // Navigate to the next level.
-      navigate(nextRoute, { state: { previousGame: nextRoute.split("/").pop() } });
-    } catch (error) {
-      console.error("Error restarting timer/inventory", error);
-    }
-  };
+  
 
   return (
     <div className="min-h-screen min-w-screen bg-[url('https://media.istockphoto.com/id/837345268/photo/noir-movie-character.jpg?s=612x612&w=0&k=20&c=WGaAh-xWelYuEoxhUE69T4e4k45Bp-MTC6KLG7edN8Y=')] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center">
@@ -91,11 +80,16 @@ const Leaderboard = ({ players = [] }) => {
           <p className="text-xl mb-2">Your Score: {currentScore}</p>
           <p className="text-xl mb-4">Items Found: {currentItemsFound}</p>
           <button
-            className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-            onClick={handleNextLevel}
-          >
-            Next Level
-          </button>
+  className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+  onClick={() =>
+    navigate(nextRoute, {
+      state: { previousGame: nextRoute.split("/").pop() },
+    })
+  }
+>
+  Next Level
+</button>
+
         </div>
       </div>
     </div>
