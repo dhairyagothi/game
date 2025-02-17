@@ -154,7 +154,6 @@ const Game2 = () => {
               key={item}
               onClick={() => handleClick(item)}
               style={{
-                backgroundColor: "rgba(255, 255, 255, 0.2)",
                 position: "absolute",
                 cursor: "pointer",
                 ...clickableStyles[item]
