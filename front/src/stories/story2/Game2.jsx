@@ -14,11 +14,11 @@ const itemsMapping = {
 
 // Define positions and sizes for each clickable item (adjust as needed)
 const clickableStyles = {
-  item1: { top: "30%", left: "40%", width: "60px", height: "60px" },
-  item2: { top: "50%", left: "20%", width: "50px", height: "50px" },
-  item3: { top: "60%", left: "70%", width: "70px", height: "70px" },
-  item4: { top: "40%", left: "80%", width: "60px", height: "60px" },
-  item5: { top: "75%", left: "35%", width: "50px", height: "50px" },
+  item1: { top: "45%", right: "35%", width: "60px", height: "60px" },
+  item2: { top: "37%", left: "50%", width: "50px", height: "50px" },
+  item3: { top: "65%", right: "75%", width: "70px", height: "70px" },
+  item4: { top: "75%", left: "80%", width: "60px", height: "60px" },
+  item5: { top: "75%", left: "59%", width: "20px", height: "50px" },
 };
 
 const Game2 = () => {
@@ -154,6 +154,7 @@ const Game2 = () => {
               key={item}
               onClick={() => handleClick(item)}
               style={{
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
                 position: "absolute",
                 cursor: "pointer",
                 ...clickableStyles[item]
