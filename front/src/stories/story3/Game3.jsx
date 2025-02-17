@@ -17,10 +17,10 @@ const itemsMapping = {
 
 // Define positions and sizes for each clickable item (adjust as needed)
 const clickableStyles = {
-  item1: { top: "25%", left: "15%", width: "100px", height: "80px" },
-  item2: { top: "35%", left: "50%", width: "80px", height: "80px" },
-  item3: { top: "45%", left: "70%", width: "80px", height: "80px" },
-  item4: { top: "60%", left: "30%", width: "100px", height: "80px" },
+  item1: { top: "55%", left: "23%", width: "100px", height: "80px" },
+  item2: { top: "30%", left: "51%", width: "80px", height: "80px" },
+  item3: { top: "20%", right: "12%", width: "80px", height: "80px" },
+  item4: { top: "52%", left: "50%", width: "48px", height: "30px" },
   item5: { top: "70%", left: "60%", width: "80px", height: "80px" },
 };
 
