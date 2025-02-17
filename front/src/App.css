@@ -20,11 +20,11 @@
 /* Clickable Frame Area */
 .frame-click-area {
   position: absolute;
-  top: 25%;
-  left: 45%;
+  top: 30%;
+  left: 50%;
   width: 10%;
-  height: 22%;
-  background: rgba(255, 255, 255, 0.2); /* Translucent */
+  height: 20%;
+  background: rgba(255, 255, 255, 0); /* Translucent */
   cursor: pointer;
   z-index: 1;
   border-radius: 5px;
@@ -34,10 +34,10 @@
 .light-click-area {
   position: absolute;
   top: 49%;
-  left: 80%;
+  left: 95%;
   width: 3%;
   height: 7%;
-  background: rgba(255, 255, 255, 0.2); /* Translucent */
+  background: rgba(255, 255, 255, 0); /* Translucent */
   cursor: pointer;
   z-index: 1;
   border-radius: 5px;
@@ -47,10 +47,10 @@
 .cabinet-click-area {
   position: absolute;
   top: 60%; /* Adjust to align with the cabinet */
-  left: 68%; /* Adjust position */
-  width: 5%; /* Adjust based on cabinet size */
+  left: 78%; /* Adjust position */
+  width: 7%; /* Adjust based on cabinet size */
   height: 20%;
-  background: rgba(255, 255, 255, 0.2); /* Translucent */
+  background: rgba(255, 255, 255, 0); /* Translucent */
   cursor: pointer;
   z-index: 1;
   border-radius: 5px;
@@ -84,6 +84,7 @@
   align-items: center;
   border: 3px solid white;
   margin-bottom: 10px;
+  z-index: 2;
 }
 
 .lock-text {
@@ -99,6 +100,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   margin-top: 10px;
+  z-index: 2;
 }
 
 .num-btn, .delete-btn, .unlock-btn {
@@ -111,6 +113,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s;
+  z-index: 2;
 }
 
 .num-btn:hover, .delete-btn:hover {

@@ -179,10 +179,10 @@ const PuzzleSceneWithArrows = () => {
         onClick={handlePolishedKey}
         style={{
           position: "absolute",
-          left: "25%",
-          top: "50%",
+          left: "45%",
+          bottom: "5%",
           transform: "translate(-50%, -50%)",
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0)",
           padding: "20px",
           borderRadius: "8px",
           cursor: "pointer",
@@ -190,7 +190,7 @@ const PuzzleSceneWithArrows = () => {
           zIndex: 2
         }}
       >
-        <h2>Polished Key</h2>
+        
       </div>
 
       {/* Clickable Div for Letter */}
@@ -198,10 +198,10 @@ const PuzzleSceneWithArrows = () => {
         onClick={handleLetter}
         style={{
           position: "absolute",
-          right: "25%",
-          top: "50%",
+          right: "30%",
+          top: "30%",
           transform: "translate(50%, -50%)",
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0)",
           padding: "20px",
           borderRadius: "8px",
           cursor: "pointer",
@@ -209,7 +209,7 @@ const PuzzleSceneWithArrows = () => {
           zIndex: 2
         }}
       >
-        <h2>Letter</h2>
+        
       </div>
 
       {/* Left Arrow Navigation to Game1 */}
