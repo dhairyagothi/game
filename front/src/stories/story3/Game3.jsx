@@ -176,9 +176,7 @@ const Game3 = () => {
               ) : item === 'item5' ? (
                 <img src={gun} alt="pistol" className="w-full h-full" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-500 text-xs">
-                  {itemsMapping[item]}
-                </div>
+                null
               )}
             </div>
           )

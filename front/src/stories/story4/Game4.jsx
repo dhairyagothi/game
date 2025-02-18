@@ -19,15 +19,15 @@ const itemsMapping = {
 
 // Define positions and sizes for each clickable item
 const clickableStyles = {
-  item1: { top: "30%", left: "20%", width: "80px", height: "80px" },
-  item2: { top: "40%", left: "55%", width: "100px", height: "100px" },
-  item3: { top: "55%", left: "75%", width: "80px", height: "80px" },
-  item4: { top: "65%", left: "35%", width: "90px", height: "90px" },
-  item5: { top: "75%", left: "65%", width: "80px", height: "80px" }
+  item1: { top: "80%", left: "58%", width: "80px", height: "80px" },
+  item2: { top: "10%", left: "14%", width: "100px", height: "100px" },
+  item3: { top: "50%", right: "70%", width: "120px", height: "220px" },
+  item4: { top: "65%", right: "22%", width: "90px", height: "90px" },
+  item5: { top: "75%", left: "35%", width: "220px", height: "120px" }
 };
 
 const Story4 = () => {
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [points, setPoints] = useState(0);
   const [clickedItems, setClickedItems] = useState([]);
   const [inventory, setInventory] = useState([]);
@@ -46,7 +46,9 @@ const Story4 = () => {
     };
     startGame();
   }, []);
-
+  if (timeLeft === 0|| points==280) {
+    navigate("/Points");
+  }
   // Poll the backend every second to update time left and points
   useEffect(() => {
     const fetchGameStatus = async () => {
@@ -169,21 +171,7 @@ const Story4 = () => {
                 ...clickableStyles[item]
               }}
             >
-              {item === 'item1' && (
-                <img src={letterOpener} alt="letterOpener" className="w-full h-full" />
-              )}
-              {item === 'item2' && (
-                <img src={painting} alt="painting" className="w-full h-full" />
-              )}
-              {item === 'item3' && (
-                <img src={candlestick} alt="candlestick" className="w-full h-full" />
-              )}
-              {item === 'item4' && (
-                <img src={Mask} alt="Mask" className="w-full h-full" />
-              )}
-              {item === 'item5' && (
-                <img src={diary} alt="diary" className="w-full h-full" />
-              )}
+              
             </div>
           )
         ))}

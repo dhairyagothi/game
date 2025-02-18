@@ -14,7 +14,7 @@ import Story1intro from './stories/story1/Story1intro';
 import Story2intro from './stories/story2/Story2intro';
 import Story3intro from './stories/story3/Story3intro';
 import Story4intro from './stories/story4/Story4intro';
-
+import FinalScore from './component/finalscore';
 
 
 const App = () => {
@@ -35,6 +35,7 @@ const App = () => {
           <Route path="/story4intro" element={<Story4intro />} />
           <Route path="/games/Game4" element={<Story4 />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/points" element={<FinalScore />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -8,6 +8,7 @@ app.use(cors());
 // In-memory storage
 let foundItems = [];
 let points = 0;
+let accumulatedBonus = 0; // Accumulates bonus from remaining time in each level
 let gameStarted = false;
 let timerEndTime = null;
 const MAX_HINTS = 5;
@@ -20,7 +21,8 @@ app.post("/start-game", (req, res) => {
     timerEndTime = Date.now() + 5 * 60 * 1000; // 5 minutes from now
     foundItems = [];
     points = 0;
-    res.json({ message: "Game started!", timeLeft: 300, points: 0 });
+    accumulatedBonus = 0;
+    res.json({ message: "Game started!", timeLeft: 300, points });
   } else {
     // Game is already in progress—calculate and return the current state.
     const timeLeft = Math.max(0, Math.floor((timerEndTime - Date.now()) / 1000));
@@ -28,11 +30,16 @@ app.post("/start-game", (req, res) => {
   }
 });
 
-
 // Get Time Left & Points
 app.get("/game-status", (req, res) => {
   const timeLeft = Math.max(0, Math.floor((timerEndTime - Date.now()) / 1000));
-  res.json({ timeLeft, points, hintsFound: foundItems.length });
+  res.json({
+    timeLeft,
+    points,
+    hintsFound: foundItems.length,
+    accumulatedBonus,
+    finalScore: points + accumulatedBonus
+  });
 });
 
 // GET all found items (Inventory)
@@ -52,7 +59,7 @@ app.post("/items", (req, res) => {
     points += 10;
 
     if (foundItems.length === MAX_HINTS) {
-      points += 20; // Bonus for all hints
+      points += 20; // Bonus for finding all hints in the level
     }
 
     res.json({ message: "Hint added!", item: newItem, points, hintsFound: foundItems.length });
@@ -66,10 +73,12 @@ app.post("/reset-game", (req, res) => {
   gameStarted = false;
   foundItems = [];
   points = 0;
+  accumulatedBonus = 0;
   timerEndTime = null;
   res.json({ message: "Game reset!" });
 });
-// Restart Timer Without Resetting Points
+
+// Restart Timer Without Resetting Points (and accumulate time bonus)
 app.post("/restart-timer", (req, res) => {
   if (!gameStarted) {
     // If no game is running, start one with a 5-minute timer.
@@ -77,11 +86,17 @@ app.post("/restart-timer", (req, res) => {
     timerEndTime = Date.now() + 5 * 60 * 1000; // 5 minutes from now
     res.json({ message: "Game started!", timeLeft: 300, points });
   } else {
-    // If a game is already in progress, reset only the timer.
-    timerEndTime = Date.now() + 5 * 60 * 1000; // Reset timer to 5 minutes
-    res.json({ message: "Timer restarted!", timeLeft: 300, points });
+    // Calculate bonus for the current level: 5 points per 30 seconds remaining
+    const currentTimeLeft = Math.max(0, Math.floor((timerEndTime - Date.now()) / 1000));
+    const bonusForLevel = Math.floor(currentTimeLeft / 30) * 5;
+    accumulatedBonus += bonusForLevel;
+    
+    // Reset timer to 5 minutes without changing points
+    timerEndTime = Date.now() + 5 * 60 * 1000;
+    res.json({ message: "Timer restarted!", timeLeft: 300, points, accumulatedBonus });
   }
 });
+
 // Reset Inventory Without Resetting Points
 app.post("/reset-inventory", (req, res) => {
   foundItems = [];
