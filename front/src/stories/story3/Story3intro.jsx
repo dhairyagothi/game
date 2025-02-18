@@ -22,10 +22,9 @@ const Story3 = () => {
   return (
     <div className="story2-container" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="story-box">
-        <h1 className="story-title">The Mystery of Willowmere Manor</h1>
+        <h1 className="story-title">The Villa of Whispers</h1>
         <p className="story-content">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora quasi eveniet temporibus dicta laborum quisquam fugiat sapiente voluptatum, pariatur dolor doloribus eos nulla. Molestias inventore itaque reprehenderit debitis omnis dolorum cum recusandae odio velit rerum mollitia laboriosam tempora, a nobis ratione quod. Odit voluptate deleniti, deserunt magni quod alias eos!
-        </p>
+        Atharva, Ambika, Ujjwal, and Mannat explore the Blackwood Villa, where Elias Blackwood was murdered, and his manager, Shivansh, was initially suspected. They find a shattered display case, a mirror with hidden messages, and property papers transferring Elias's fortune to his business partner, Nihal Awasthi. Elias's diary reveals his fear of Nihal's greed. In the cellar, they discover a pistol. They piece together the truth that Nihal forged the property papers and murdered Elias. Then he framed Shivansh. He killed Shivansh before he could reveal the truth. The motive was greed and betrayal, the emerald necklace distraction.        </p>
       </div>
       <button className="start-game-btn2" onClick={handleNextLevel}>
         Proceed to Game Room
