@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/story4intro" element={<Story4intro />} />
           <Route path="/games/Game4" element={<Story4 />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/points" element={<FinalScore />} />
+          <Route path="/points/:teamName" element={<FinalScore />} />
         </Routes>
       </BrowserRouter>
     </div>

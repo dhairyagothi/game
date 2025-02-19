@@ -2,28 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const Leaderboard = ({ players = [] }) => {
+const Leaderboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Retrieve the previous game indicator from the router state.
+  // Retrieve the previous game indicator from router state.
   const previousGame = location.state?.previousGame || "default";
   
-  // Determine next route based on where we came from.
+  // Determine next route based on previous game.
   let nextRoute = "/games/game1"; // default (if needed)
   if (previousGame === "game11" || previousGame === "game1") {
     nextRoute = "/story2intro";
   } else if (previousGame === "game2") {
     nextRoute = "/story3intro";
-  }else if (previousGame === "game3") {
-  nextRoute = "/story4intro";
-}
+  } else if (previousGame === "game3") {
+    nextRoute = "/story4intro";
+  }
   
-  // State to store current player's score and number of items found.
+  // State for leaderboard entries.
+  const [players, setPlayers] = useState([]);
+  // State to store current player's game status.
   const [currentScore, setCurrentScore] = useState(0);
   const [currentItemsFound, setCurrentItemsFound] = useState(0);
 
-  // Fetch current score and items from the backend.
+  // Fetch leaderboard data from MongoDB.
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/leaderboard");
+        // Assuming response.data.leaderboard is an array of documents.
+        setPlayers(response.data.leaderboard);
+      } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+      }
+    };
+    fetchLeaderboard();
+  }, []);
+
+  // Fetch current game status from backend.
   useEffect(() => {
     const fetchCurrentStatus = async () => {
       try {
@@ -31,14 +47,18 @@ const Leaderboard = ({ players = [] }) => {
         setCurrentScore(response.data.points);
         setCurrentItemsFound(response.data.hintsFound);
       } catch (error) {
-        console.error("Error fetching current status:", error);
+        console.error("Error fetching game status:", error);
       }
     };
 
     fetchCurrentStatus();
   }, []);
 
-  
+  const handleNextLevel = () => {
+    navigate(nextRoute, {
+      state: { previousGame: nextRoute.split("/").pop() },
+    });
+  };
 
   return (
     <div className="min-h-screen min-w-screen bg-[url('https://media.istockphoto.com/id/837345268/photo/noir-movie-character.jpg?s=612x612&w=0&k=20&c=WGaAh-xWelYuEoxhUE69T4e4k45Bp-MTC6KLG7edN8Y=')] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center">
@@ -58,11 +78,11 @@ const Leaderboard = ({ players = [] }) => {
             {players.length > 0 ? (
               players.map((player, index) => (
                 <tr
-                  key={player.id || index}
+                  key={player._id || index}
                   className="border-b border-gray-800 hover:bg-gray-800 transition-colors"
                 >
                   <td className="py-2 px-4">{index + 1}</td>
-                  <td className="py-2 px-4">{player.name}</td>
+                  <td className="py-2 px-4">{player.teamName}</td>
                   <td className="py-2 px-4">{player.score}</td>
                 </tr>
               ))
@@ -80,16 +100,11 @@ const Leaderboard = ({ players = [] }) => {
           <p className="text-xl mb-2">Your Score: {currentScore}</p>
           <p className="text-xl mb-4">Items Found: {currentItemsFound}</p>
           <button
-  className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-  onClick={() =>
-    navigate(nextRoute, {
-      state: { previousGame: nextRoute.split("/").pop() },
-    })
-  }
->
-  Next Level
-</button>
-
+            className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            onClick={handleNextLevel}
+          >
+            Next Level
+          </button>
         </div>
       </div>
     </div>

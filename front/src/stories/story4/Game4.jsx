@@ -46,8 +46,9 @@ const Story4 = () => {
     };
     startGame();
   }, []);
-  if (timeLeft === 0|| points==280) {
-    navigate("/Points");
+  if (timeLeft === 0|| inventory.length==5) {
+    const teamname=localStorage.getItem("teamName")
+    navigate(`/Points/:${teamname}`);
   }
   // Poll the backend every second to update time left and points
   useEffect(() => {
@@ -57,6 +58,7 @@ const Story4 = () => {
         setTimeLeft(response.data.timeLeft);
         setPoints(response.data.points);
         if (response.data.timeLeft <= 0|| inventory.length==5) {
+          
           navigate('/Leaderboard');
         }
       } catch (error) {

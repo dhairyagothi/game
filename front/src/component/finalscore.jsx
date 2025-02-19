@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const FinalScore = () => {
+const PointsBoard = () => {
+  // Extract teamName from route parameters.
+  const { teamName } = useParams();
   const [timeLeft, setTimeLeft] = useState(0);
   const [basePoints, setBasePoints] = useState(0);
   const [accumulatedBonus, setAccumulatedBonus] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
   const navigate = useNavigate();
 
-  // Fetch the final game status from the backend
+  // Fetch final game status from backend
   useEffect(() => {
     const fetchFinalStatus = async () => {
       try {
@@ -32,16 +34,17 @@ const FinalScore = () => {
   }, []);
 
   const handlePlayAgain = async () => {
-    // Optionally, reset the game
-    await axios.post("http://localhost:5000/reset-game");
-    // Navigate to the starting page (adjust as needed)
+    // Optionally reset the game state in the backend.
+    await axios.post("http://localhost:5000/reset-game", { teamName });;
     navigate("/");
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
       <h1 className="text-4xl font-bold mb-4">Game Over</h1>
+      <p className="text-xl mb-2">Team: {teamName}</p>
       <p className="text-xl mb-2">Base Points: {basePoints}</p>
+      <p className="text-xl mb-2">Time Left: {timeLeft} seconds</p>
       <p className="text-xl mb-2">Accumulated Time Bonus: {accumulatedBonus} points</p>
       <h2 className="text-3xl font-bold mb-4">Final Score: {finalScore}</h2>
       <button
@@ -54,4 +57,4 @@ const FinalScore = () => {
   );
 };
 
-export default FinalScore;
+export default PointsBoard;
