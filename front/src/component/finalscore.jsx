@@ -9,9 +9,11 @@ const PointsBoard = () => {
   const [basePoints, setBasePoints] = useState(0);
   const [accumulatedBonus, setAccumulatedBonus] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [myRank, setMyRank] = useState(null);
+  const [players, setPlayers] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch final game status from backend
+  // Fetch the final game status from the backend.
   useEffect(() => {
     const fetchFinalStatus = async () => {
       try {
@@ -33,10 +35,36 @@ const PointsBoard = () => {
     fetchFinalStatus();
   }, []);
 
+  // Fetch leaderboard data from MongoDB.
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/leaderboard");
+        const leaderboard = res.data.leaderboard; // assuming this is sorted in descending order by score
+        setPlayers(leaderboard);
+
+        // Compute rank: count how many teams have a higher score than the current finalScore.
+        const rank = leaderboard.filter(player => player.score > finalScore).length + 1;
+        setMyRank(rank);
+      } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+      }
+    };
+
+    // Run after finalScore is set.
+    if (finalScore !== 0) {
+      fetchLeaderboard();
+    }
+  }, [finalScore]);
+
+  // Play Again: Reset game state in the backend and navigate to the home/start page.
   const handlePlayAgain = async () => {
-    // Optionally reset the game state in the backend.
-    await axios.post("http://localhost:5000/reset-game", { teamName });;
-    navigate("/");
+    try {
+      await axios.post("http://localhost:5000/reset-game", { teamName });
+      navigate("/");
+    } catch (error) {
+      console.error("Error resetting game:", error);
+    }
   };
 
   return (
@@ -46,7 +74,10 @@ const PointsBoard = () => {
       <p className="text-xl mb-2">Base Points: {basePoints}</p>
       <p className="text-xl mb-2">Time Left: {timeLeft} seconds</p>
       <p className="text-xl mb-2">Accumulated Time Bonus: {accumulatedBonus} points</p>
-      <h2 className="text-3xl font-bold mb-4">Final Score: {finalScore}</h2>
+      <h2 className="text-3xl font-bold mb-2">Final Score: {finalScore}</h2>
+      <p className="text-xl mb-4">
+        Your Rank: {myRank !== null ? myRank : "Calculating..."}
+      </p>
       <button
         onClick={handlePlayAgain}
         className="mt-6 px-6 py-3 bg-blue-600 rounded hover:bg-blue-700 transition"

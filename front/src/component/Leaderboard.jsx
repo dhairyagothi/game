@@ -5,7 +5,7 @@ import axios from "axios";
 const Leaderboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Retrieve the previous game indicator from router state.
   const previousGame = location.state?.previousGame || "default";
   
@@ -21,16 +21,18 @@ const Leaderboard = () => {
   
   // State for leaderboard entries.
   const [players, setPlayers] = useState([]);
-  // State to store current player's game status.
+  // State to store current team's score.
   const [currentScore, setCurrentScore] = useState(0);
   const [currentItemsFound, setCurrentItemsFound] = useState(0);
+  // State to store the computed rank based on currentScore.
+  const [myRank, setMyRank] = useState(null);
 
   // Fetch leaderboard data from MongoDB.
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
         const response = await axios.get("http://localhost:5000/leaderboard");
-        // Assuming response.data.leaderboard is an array of documents.
+        // Assuming response.data.leaderboard is an array sorted descending by score.
         setPlayers(response.data.leaderboard);
       } catch (error) {
         console.error("Error fetching leaderboard:", error);
@@ -50,9 +52,17 @@ const Leaderboard = () => {
         console.error("Error fetching game status:", error);
       }
     };
-
     fetchCurrentStatus();
   }, []);
+
+  // Compute current team's rank by comparing currentScore with leaderboard scores.
+  useEffect(() => {
+    if (players.length > 0) {
+      // Count how many players have a higher score than currentScore.
+      const rank = players.filter(player => player.score > currentScore).length + 1;
+      setMyRank(rank);
+    }
+  }, [players, currentScore]);
 
   const handleNextLevel = () => {
     navigate(nextRoute, {
@@ -98,10 +108,17 @@ const Leaderboard = () => {
         {/* Summary Section */}
         <div className="mt-6 p-4 bg-gray-800 rounded">
           <p className="text-xl mb-2">Your Score: {currentScore}</p>
-          <p className="text-xl mb-4">Items Found: {currentItemsFound}</p>
+          <p className="text-xl mb-2">Items Found: {currentItemsFound}</p>
+          <p className="text-xl mb-4">
+            Your Rank: <span className="font-bold">{myRank !== null ? myRank : "Calculating..."}</span>
+          </p>
           <button
             className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-            onClick={handleNextLevel}
+            onClick={() =>
+              navigate(nextRoute, {
+                state: { previousGame: nextRoute.split("/").pop() },
+              })
+            }
           >
             Next Level
           </button>
