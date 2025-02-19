@@ -131,7 +131,6 @@ const MysteryGame = () => {
           width: "90px",
           height: "80px",
           backgroundColor: "rgba(255, 255, 255, 0)",
-          cursor: "pointer",
           transform: "translate(-50%, -50%)",
           zIndex: 1,
         }}
@@ -159,7 +158,7 @@ const MysteryGame = () => {
             maxLength="4"
             value={enteredCode}
             onChange={(e) => setEnteredCode(e.target.value)}
-            style={{ padding: "5px", fontSize: "18px" }}
+            style={{ padding: "5px", fontSize: "18px", color:"black"}}
           />
           <button onClick={handleUnlock} style={{ marginLeft: "10px", padding: "5px 10px" }}>
             Unlock

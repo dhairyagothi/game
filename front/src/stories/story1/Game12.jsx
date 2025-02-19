@@ -185,7 +185,6 @@ const PuzzleSceneWithArrows = () => {
           backgroundColor: "rgba(255, 255, 255, 0)",
           padding: "20px",
           borderRadius: "8px",
-          cursor: "pointer",
           textAlign: "center",
           zIndex: 2
         }}
@@ -204,7 +203,6 @@ const PuzzleSceneWithArrows = () => {
           backgroundColor: "rgba(255, 255, 255, 0)",
           padding: "20px",
           borderRadius: "8px",
-          cursor: "pointer",
           textAlign: "center",
           zIndex: 2
         }}

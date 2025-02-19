@@ -219,7 +219,6 @@ const LibraryScene = () => {
           right: "10px",
           top: "50%",
           transform: "translateY(-50%)",
-          cursor: "pointer",
           fontSize: "2rem",
           color: "#fff",
           zIndex: 2,

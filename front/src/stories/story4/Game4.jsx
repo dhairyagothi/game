@@ -66,7 +66,7 @@ const Story4 = () => {
 
     const interval = setInterval(fetchGameStatus, 1000);
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, [inventory,navigate]);
 
   // Fetch the inventory from the backend
   const fetchInventory = async () => {
