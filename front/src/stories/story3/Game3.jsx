@@ -52,7 +52,7 @@ const Game3 = () => {
         const response = await axios.get("http://localhost:5000/game-status");
         setTimeLeft(response.data.timeLeft);
         setPoints(response.data.points);
-        if (response.data.timeLeft <= 0 || response.data.points==210) {
+        if (response.data.timeLeft <= 0 || inventory.length==5) {
           navigate("/leaderboard", { state: { previousGame: "game3", currentScore: points } });
         }
       } catch (error) {
@@ -165,19 +165,34 @@ const Game3 = () => {
               onClick={() => handleClick(item)}
               style={{
                 position: "absolute",
-                cursor: "pointer",
                 ...clickableStyles[item]
               }}
             >
               {item === 'item2' ? (
-                <img src={mirror} alt="mirror" className="w-full h-full" />
-              ) : item === 'item3' ? (
-                <img src={clock} alt="clock" className="w-full h-full" />
-              ) : item === 'item5' ? (
-                <img src={gun} alt="pistol" className="w-full h-full" />
-              ) : (
-                null
-              )}
+  <img
+    src={mirror}
+    alt="mirror"
+    className="w-full h-full"
+    style={{ filter: 'grayscale(100%)' ,opacity:0.5}}
+  />
+) : item === 'item3' ? (
+  <img
+    src={clock}
+    alt="clock"
+    className="w-full h-full"
+    style={{ filter: 'grayscale(100%)' ,opacity:0.5}}
+  />
+) : item === 'item5' ? (
+  <img
+    src={gun}
+    alt="pistol"
+    className="w-full h-full"
+    style={{ filter: 'grayscale(10%)',opacity:0.5 }}
+  />
+) : (
+  null
+)}
+
             </div>
           )
         ))}

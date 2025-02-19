@@ -56,7 +56,7 @@ const Story4 = () => {
         const response = await axios.get("http://localhost:5000/game-status");
         setTimeLeft(response.data.timeLeft);
         setPoints(response.data.points);
-        if (response.data.timeLeft <= 0|| response.data.points==280) {
+        if (response.data.timeLeft <= 0|| inventory.length==5) {
           navigate('/Leaderboard');
         }
       } catch (error) {
@@ -167,7 +167,6 @@ const Story4 = () => {
               onClick={() => handleClick(item)}
               style={{
                 position: "absolute",
-                cursor: "pointer",
                 ...clickableStyles[item]
               }}
             >

@@ -20,8 +20,8 @@
 /* Clickable Frame Area */
 .frame-click-area {
   position: absolute;
-  top: 30%;
-  left: 50%;
+  top: 29%;
+  left: 49%;
   width: 10%;
   height: 20%;
   background: rgba(255, 255, 255, 0); /* Translucent */

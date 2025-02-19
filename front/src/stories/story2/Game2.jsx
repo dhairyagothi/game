@@ -49,7 +49,7 @@ const Game2 = () => {
         const response = await axios.get("http://localhost:5000/game-status");
         setTimeLeft(response.data.timeLeft);
         setPoints(response.data.points);
-        if (response.data.timeLeft <= 0 || response.data.points==140) {
+        if (response.data.timeLeft <= 0 || inventory.length==5) {
           navigate('/leaderboard', { state: { previousGame: "game2", currentScore: response.data.points } });
         }
       } catch (error) {
@@ -155,7 +155,7 @@ const Game2 = () => {
               onClick={() => handleClick(item)}
               style={{
                 position: "absolute",
-                cursor: "pointer",
+                
                 ...clickableStyles[item]
               }}
             />
